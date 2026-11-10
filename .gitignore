@@ -1,0 +1,18 @@
+.venv/
+__pycache__/
+*.pyc
+data/*.db
+# demo render intermediates (the mp4s, poster, VOICEOVER.md and build
+# scripts are tracked; frames/shots/VO takes are reproducible)
+demo/shots_v2/
+demo/work_v2/
+demo/vo_final/
+work_shots/
+contracts/ajo-circle/target/
+contracts/ajo-circle/res/
+.env
+*.testnet
+neardev/
+hidden/
+*.json.key
+near-credentials/
