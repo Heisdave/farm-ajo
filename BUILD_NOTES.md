@@ -593,3 +593,34 @@ Server started exactly as the README says (venv exists,
 - **Initial commit:** `7db31e5` — "Farm Ajo: agent-run Ajo circle
   for farm inputs, two-signature QC receipts on NEAR testnet".
   `git remote -v` is empty; nothing pushed; working tree clean.
+
+---
+
+# Docs clarification — "where does the money move?" (2026-11-10, late)
+
+Dexter asked the physical-flow question a judge will also ask: after
+the pot fills, the fertilizer seller does not accept crypto — so how
+does Farm Ajo work physically? Docs-only clarification of scope
+(feature freeze held; no code or contract changes):
+
+- **README.md** gained a Q&A, **"Where does the money actually
+  move?"**, next to the verifier Q&A: production contributions are
+  naira via bank transfer / USSD / mobile money / cash to the
+  co-operative and sit in the co-op's bank account, as Ajo runs
+  today; the agent treasurer is the bookkeeping and trigger layer,
+  not a wallet; the supplier is paid by ordinary bank transfer and
+  never touches crypto; NEAR is the public receipt book
+  (contributions, purchase, delivery, QC attestation), not the
+  payment rail.
+- **DESIGN.md** Honest limitations gained the same model as a
+  "Where the money moves" bullet, including the release path: the
+  co-op account's signatories authorise the release (mirroring the
+  two-signature model), or later a payment provider's transfer API —
+  that integration is roadmap, not built.
+- **SUBMISSION_DRAFT.md** idea field: one sentence appended to the
+  HONEST SCOPE paragraph (production naira flow via the co-op's bank
+  account; NEAR as receipt book, not payment rail; supplier needs no
+  crypto). Re-counted programmatically with the same blockquote
+  extraction used for the original count: **1,455 → 1,685
+  characters** (limit 20–2000 — still inside). Both count references
+  in the draft file updated to match.

@@ -169,6 +169,22 @@ has to survive, so it is answered in the mechanism, not in marketing:
   scripted demo data (marked as such inside the receipt's notes). The
   checks themselves are the real checks used at a blending plant; no
   real fertilizer moved.
+- **Where the money moves.** This build demonstrates the record
+  layer, and that split is deliberate. In production the money stays
+  in naira and moves the way Ajo money moves today: farmers pay by
+  bank transfer, USSD, mobile money, or cash to the co-operative,
+  and the pooled money sits in the co-operative's bank account. The
+  agent treasurer is the bookkeeping and trigger layer — it records
+  each contribution against the circle's terms and issues the
+  purchase instruction the moment the pot reaches the target; the
+  release is authorised by the co-op account's signatories
+  (mirroring the two-signature model) or, later, through a payment
+  provider's transfer API — that integration is roadmap, not built.
+  The supplier is paid by ordinary bank transfer and needs no
+  crypto. NEAR is the public receipt book — contributions, purchase,
+  delivery, QC attestation — not the payment rail: the public
+  record is what settles the disputes a paper notebook cannot (who
+  paid, what was delivered, who checked it).
 - **Member identity.** The contract records contributions by member id
   because the demo's farmers are simulated by the agent. Production
   would bind contributions to each farmer's own NEAR account

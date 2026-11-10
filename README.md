@@ -115,6 +115,35 @@ the contract, not by trust in this API:
   passes bad fertilizer burns the only asset they have in the system:
   their name. That is the bond.
 
+## Where does the money actually move?
+
+Not on the chain. In production the money moves the way Ajo money
+already moves today — in naira, through the channels the farmers
+already use:
+
+- Each farmer pays their share by bank transfer, USSD, mobile money,
+  or cash handed to the co-operative, exactly as a paper-notebook Ajo
+  runs now. The pooled money sits in the co-operative's bank account,
+  as it does today.
+- The agent treasurer is the bookkeeping and trigger layer, not a
+  wallet: it records each contribution against the circle's terms,
+  shows who still owes, and issues the purchase instruction the
+  moment the pot reaches the target.
+- The supplier is paid in naira by ordinary bank transfer from the
+  co-op's account — released by the account's signatories, mirroring
+  the two-signature model the receipt uses — and never touches
+  crypto. (Wiring that release to a payment provider's transfer API
+  is roadmap, not built.)
+- NEAR's job is the public receipt book: who paid what, when the
+  purchase fired, what was delivered, and who signed for its
+  quality. That is exactly what today's notebook cannot give the
+  circle — when a dispute starts over who paid, or what actually
+  arrived, there is nothing settled to point at. A public record
+  everyone can check is what those arguments get settled against.
+
+In this demo, nothing moves at all: contributions are records on
+testnet, and the contract tracks amounts and does not custody funds.
+
 ## The contract
 
 `contracts/ajo-circle/` (Rust, near-sdk pinned `=5.1.0` — see

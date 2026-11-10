@@ -43,7 +43,7 @@ post — the shortest honest compression still ran ~340 weighted.
 Use this if Dexter prefers one post; the thread says more (shortfalls,
 the agent firing, the honest downside in full).
 
-## 3. Submission "idea" field — **1,455 characters** (allowed 20–2000)
+## 3. Submission "idea" field — **1,685 characters** (allowed 20–2000)
 
 > Farm Ajo — Ajo, but the pot has a job.
 >
@@ -55,7 +55,7 @@ the agent firing, the honest downside in full).
 >
 > FOUNDER FIT: The QC checks (bag count, sample weights against the nominal 50 kg, granule uniformity and caking, batch-label grade) were written from the founder's 6-month production and quality-control placement at a fertilizer blending plant in Kaduna State.
 >
-> HONEST SCOPE: Demo farmers, demo units. Payments and delivery are simulated on testnet; the contract tracks amounts and does not custody funds.
+> HONEST SCOPE: Demo farmers, demo units. Payments and delivery are simulated on testnet; the contract tracks amounts and does not custody funds. In production, contributions move in naira through the co-operative's bank account, exactly as Ajo does today — NEAR is the public receipt book, not the payment rail, and the supplier is paid by bank transfer and needs no crypto.
 
 ## 4. Submission payload draft (DO NOT SEND — draft only)
 
@@ -70,7 +70,7 @@ the agent firing, the honest downside in full).
   "nearAddress": "dexter01.near",
   "projectUrl": "https://github.com/Heisdave/farm-ajo",
   "demoUrl": "TO-FILL-AFTER-X-POST",
-  "idea": "<the 1,455-character idea text in section 3 above>",
+  "idea": "<the 1,685-character idea text in section 3 above>",
   "consent": false
 }
 ```
