@@ -454,3 +454,142 @@ line. Nothing was created or pushed on GitHub.
 Tests at close of fix round: **pytest 11 passed** (8 + 3 new),
 **cargo test 13 passed**. Local only; nothing published, posted or
 submitted.
+
+---
+
+# QA pass + submission drafts + git prep (2026-11-10, evening)
+
+Feature freeze in force — QA and text only. Also today: Dexter moved
+the submission UP to **Wednesday 2026-11-11** (repo public, X post,
+payload confirmation and submission all Wednesday; Thu–Sat become
+request-changes buffer). Drafts are in **SUBMISSION_DRAFT.md**.
+
+## A1. Full suites re-run from clean state
+
+| Suite | Command | Result |
+|---|---|---|
+| pytest | `.venv/bin/python -m pytest tests/ -q` (DB deleted first) | **11 passed**, 0 failed (1 pre-existing Starlette deprecation warning) |
+| cargo test | `cargo clean` then `cargo test` (contracts/ajo-circle) | **13 passed**, 0 failed (+0 doc-tests) |
+| wasm build | `bash scripts/build_contract.sh` | **succeeds** — `res/farm_ajo_circle.wasm`, **219K** |
+
+## A2. Fresh-eyes numbers audit — every number cross-checked
+
+Sources: README.md, DESIGN.md, /demo (seeded + final states, live
+server), /circle, /farmers, /receipts, video end card + captions
+(demo/build_v2.py; v2/v3 both ffprobe-verified at 59.13 s),
+VOICEOVER.md, onchain.json — against **live chain read-backs**
+(near-cli-rs `get_circle` + `get_member` against
+`circle2.farmajo-dev.testnet`, run during this QA).
+
+| Number | Everywhere it appears | Chain / source of truth | Verdict |
+|---|---|---|---|
+| Target 40,000 | README, DESIGN, /demo header, /circle, VO script, end card | `get_circle` target **40000** | ✅ agree |
+| Share 5,000 ×8 members | README, DESIGN, /demo, VO ("five thousand") | `contribution_amount` **5000**, `member_count` **8** | ✅ agree |
+| Pot seeded 32,500; 6 of 8 paid; shortfall 7,500 | README steps, DESIGN, /demo seeded (header 32,500 of 40,000 · 6 of 8 · 6 "Paid in full" chips; table rows sum 30,000+2,500+0) | seed data + `/circle` (pot 32500, fully_paid 6, shortfall 7500) | ✅ agree |
+| Halima paid 2,500 / owes 2,500; Emeka paid 0 / owes 5,000 | README, DESIGN, /demo, /farmers, VO | `/farmers` seeded read-back exact | ✅ agree |
+| Final pot 40,000; all members 5,000 | /demo final (40,000 of 40,000 · 8 of 8), /receipts | `get_circle` pot **40000**; `get_member` Halima/Emeka/Amina each **5000** (8×5,000=40,000) | ✅ agree |
+| 20 bags · NPK 15-15-15 · 2,000/bag · total 40,000 · leftover 0 | README, DESIGN, /demo receipt, VO, tick response | `get_circle.delivery`: bags **20**, grade **NPK 15-15-15**, total_cost **40000** | ✅ agree |
+| 50 kg nominal bag; ±2% sample-weight check (4 checks) | README, DESIGN, /receipts, VO | on-chain attestation `checks` array — identical 4 strings | ✅ agree |
+| State `verified`; qc_passed true | README, DESIGN, /demo final | `get_circle` state **verified**, attestation `qc_passed: true` | ✅ agree |
+| v2 tx hashes (deploy 7YZLiKh…, delivery BvkdEt8…, attestation 9dv6SwC…, violations 6DZRifx…/EUEgdTZ…) | DEPLOY_NOTES, README (violation tx), /demo chain card, onchain.json | onchain.json == DEPLOY_NOTES == /demo-rendered values (programmatic compare) | ✅ agree |
+| v1 preserved: contract circle.farmajo-dev.testnet, purchase tx 3ot66Bfc… | README, DESIGN, DEPLOY_NOTES, onchain.json (`previous_v1_*`) | consistent across all four | ✅ agree |
+| Account ids (contract circle2…, supplier…, verifier…, deployer farmajo-dev.testnet) | all docs + /demo | on-chain `supplier_account`/`verifier_account` fields match | ✅ agree |
+| Video: 59 s · wasm 219 KB (v2) / 200 KB (v1) | README, BUILD_NOTES | ffprobe 59.13 s both cuts; build output 219K; phase-2 record 200K | ✅ agree |
+| Test counts: pytest 11, cargo 13 | this section | A1 runs above | ✅ agree (after fix F1 below) |
+
+**Discrepancies found — all stale DOC text, none in code or chain
+state. Fixed (docs only):**
+
+- **F1.** README run-it section said "agent logic: **8 tests**" —
+  suite is 11 since the fix round. → "agent logic + demo page:
+  11 tests".
+- **F2.** README called `farm-ajo-demo-v2.mp4` "the current demo
+  video … captioned" — v3 (with voiceover) is the current cut.
+  → updated to v3.
+- **F3.** README redeploy paragraph said "the **200 KB** wasm" in
+  the current-contract context — that was v1's size; v2 is 219 KB.
+  → "219 KB".
+- **F4.** DESIGN "What NEAR does" listed state flow
+  `open → funded → purchased` — v2 states are
+  `open → funded → delivered → verified` (README and chain agree).
+  → fixed in DESIGN.
+- **F5.** DESIGN scope section said "Friday's final cut will show
+  the two signatures" — overtaken by events (v3 shows them; also
+  submission moved to Wednesday). → updated.
+- **F6.** VOICEOVER.md scene-6 visual said "NEAR testnet explorer
+  (attestation tx, live)" — the shipped beat is the fallback
+  on-chain card (explorer render blocked from this VM, documented
+  in the fix round). → wording corrected in VOICEOVER.md.
+
+No number in code, seed data, the /demo page, or on-chain state
+disagreed with any other — the freeze held; nothing in code was
+touched.
+
+## A3. README reproducibility — followed literally, fresh DB
+
+Server started exactly as the README says (venv exists,
+`uvicorn app.main:app --port 8792`), DB deleted first:
+
+| README step | Promised | Observed |
+|---|---|---|
+| 1. `GET /circle` | pot 32500 of 40000, state "open" | ✅ pot 32500, target 40000, state open, 6 fully paid, shortfall 7500 |
+| 2. `GET /farmers` | Halima 2500, Emeka 5000 owed | ✅ Halima shortfall 2500; Emeka shortfall 5000 (response wraps the list in a `farmers` field — values exact) |
+| 3. `POST /agent/tick` below target | lists shortfalls, refuses to buy | ✅ funded:false, purchase null, 2 reminders + hold line |
+| 4. Two contributions (Emeka 5000, Halima 2500) | recorded | ✅ pot 37500 → 40000, state funded at exactly 40000 |
+| 5. `POST /agent/tick` at target | fires purchase (20 bags NPK 15-15-15), generates BOTH signature payloads | ✅ purchase {20 bags, total_cost 40000, leftover 0}; delivery + attestation payloads built for the two role accounts; circle verified |
+| 6. `GET /receipts` | stored two-signature receipt, "Delivered by" / "Quality attested by" separate | ✅ receipt id 1 with delivered_by + supplier_account and attested_by + verifier_account as separate fields, 4 checks |
+| Tests line | pytest | ✅ 11 passed (count wording fixed in F1) |
+| Reset | `rm data/farm_ajo.db` re-seeds | ✅ done at the end of this QA; server stopped |
+
+## B. Submission drafts (SUBMISSION_DRAFT.md)
+
+- X main draft: 3-post thread (single post proven impossible at
+  ~340 weighted chars with all required elements), posts at
+  **237 / 272 / 275** of 280 X-weighted chars; shorter single-post
+  alternate at **276 / 280**. Both carry the opening line, the pitch
+  line, @NEARProtocol + #NEARHackathon, repo + live explorer URLs,
+  the honest downside, and the phone/test-week detail; banned-word
+  scanned clean.
+- Idea field: **1,455 characters** (limit 20–2000), counted
+  programmatically.
+- Payload draft: placeholders for requestId
+  (TO-GENERATE-AT-SUBMISSION) and demoUrl (TO-FILL-AFTER-X-POST),
+  consent=false pending Dexter's verbatim agreement, tracks flagged
+  for Dexter's final confirmation Wednesday, no `website` field.
+- Wednesday sequence written into the draft file (repo public with
+  Dexter's confirmation → his X post → fill demoUrl → print payload
+  → his confirmation → submit once).
+
+## C. Git prep (LOCAL ONLY — no remote, no push, no GitHub contact)
+
+- `git init` (branch `main`) in the project root; repo-local author
+  set to Dexter's GitHub identity (Heisdave / his submission email).
+- **.gitignore verified + extended:** already covered `.venv/`,
+  `__pycache__/`, `data/*.db`, contract `target/` + `res/`, `.env`,
+  `*.testnet`, `neardev/`, `hidden/`, `*.json.key`,
+  `near-credentials/`. Added demo render intermediates
+  (`demo/shots_v2/`, `demo/work_v2/`, `demo/vo_final/`,
+  `work_shots/`).
+- **Credentials:** NEAR keys exist ONLY in
+  `~/.near-credentials/testnet/` (outside the tree — listed and
+  confirmed). `hidden/credentials/` inside the tree is **empty**;
+  a find for `*.json.key` / `*.testnet` / `*.pem` / `*.key` /
+  neardev anywhere in the tree returned nothing.
+- **Demo DB decision:** `data/*.db` stays OUT of the repo. The
+  README's own flow re-seeds on first request after
+  `rm data/farm_ajo.db`, so a tracked DB would only freeze a
+  mid-demo state; judges get the seeded opening state by running it.
+- **Tracked set: 24 files** — .gitignore, README/DESIGN/BUILD_NOTES/
+  DEPLOY_NOTES/SUBMISSION_DRAFT, onchain.json, requirements.txt,
+  app/ (4 py), contracts source (Cargo.toml, Cargo.lock, lib.rs),
+  scripts/build_contract.sh, tests/ (2 py), demo/ (VOICEOVER.md,
+  build_v2.py, poster.png, v1+v2+v3 mp4s).
+- **Secret scan over all tracked content:** grep for `ed25519:`,
+  private/secret-key markers, seed-phrase/mnemonic, password
+  assignments, bearer/API-key patterns, and ≥80-char base58 strings
+  in text files — **all clean**. The only hashes/ids tracked are the
+  public on-chain tx hashes and account ids in onchain.json and the
+  notes.
+- **Initial commit:** `7db31e5` — "Farm Ajo: agent-run Ajo circle
+  for farm inputs, two-signature QC receipts on NEAR testnet".
+  `git remote -v` is empty; nothing pushed; working tree clean.
