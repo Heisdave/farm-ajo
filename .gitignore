@@ -16,3 +16,6 @@ neardev/
 hidden/
 *.json.key
 near-credentials/
+demo/work_v5/
+demo/vo_v4/
+demo/vo_v5/

@@ -624,3 +624,22 @@ does Farm Ajo work physically? Docs-only clarification of scope
   extraction used for the original count: **1,455 → 1,685
   characters** (limit 20–2000 — still inside). Both count references
   in the draft file updated to match.
+
+### v5 — Dexter's three fixes (2026-11-10, evening)
+
+**`demo/farm-ajo-demo-v5.mp4` is the current cut** (v3 and v4 intact
+as fallbacks). Full detail in `demo/V5_NOTES.md`. Dexter's voice-note
+fixes, all three done: (1) **New voice** — "Inspiring Gong"
+(`avocado_v2:vg_ng_m23`, Nigerian, rich/direct), picked by Dexter
+from samples; all 7 lines re-rendered with exact VOICEOVER.md words,
+per-line speeds fitted (L5 @140, L6 @115, tagline @88) so every line
+starts inside its scene; v4's ending structure kept — 1.52 s
+music-only held beat before the slower tagline, sign-off ends 58.59 s.
+Renders in `demo/vo_v5/`. (2) **Overlay backgrounds** —
+`demo/build_v5.py` (copy of build_v2.py; original untouched) blends
+the AI overlays into each scene's background at 20% (end card 15% +
+blur), screenshots pasted opaquely on top; timings/xfades identical;
+frames visually inspected — text fully readable. (3) **Music bed
++6 dB** — v4's pad at mean −45 dB, ≈22 dB under the voice.
+Verified: h264 1920×1080 yuv420p 30 fps + AAC, 59.133 s, speech in
+all windows, held-beat −44.1 dB (pad only), peaks −1.1 dB.

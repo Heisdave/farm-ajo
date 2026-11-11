@@ -12,9 +12,9 @@ Step 1/2/3 structure.
 
 ---
 
-## 1. X demo post — MAIN DRAFT (3-post thread, video v3 attached to post 1)
+## 1. X demo post — MAIN DRAFT (3-post thread, video v5.1 attached to post 1)
 
-Attach `demo/farm-ajo-demo-v3.mp4` to post 1. Dexter posts from his
+Attach `demo/farm-ajo-demo-v5_1.mp4` to post 1. Dexter posts from his
 phone (@heisdave01). Each post fits X's 280 on its own.
 
 **Post 1** (237 / 280):
@@ -96,8 +96,8 @@ Notes on the payload:
   to `github.com/Heisdave/farm-ajo` and made public **only with
   Dexter's explicit confirmation**.
 2. **Dexter posts the X demo** from his phone (@heisdave01): the
-  thread in section 1 (or the alternate in section 2) with the v3
-  video attached. He sends back the post URL.
+  thread in section 1 (or the alternate in section 2) with the v5.1
+  video attached (corrected from v3 on 2026-11-11 ~08:58 WAT — v5.1 is the current cut, pending Dexter's ear verdict at the 09:09 run; if he rejects it, fall back to v5, `demo/farm-ajo-demo-v5.mp4`). He sends back the post URL.
 3. **Fill `demoUrl`** in the payload with that X post URL.
 4. **Print the full payload** for Dexter, including the consent
   notice read verbatim.

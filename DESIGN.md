@@ -151,7 +151,7 @@ has to survive, so it is answered in the mechanism, not in marketing:
   redeployed at `circle2.farmajo-dev.testnet` with the full loop —
   including two deliberate, rejected role-violation attempts — run
   on-chain to the final `verified` state. The demo video was produced
-  the same day and its current cut (v3, with voiceover) shows the two
+  the same day and its current cut (v5.1, with voiceover) shows the two
   signatures (see BUILD_NOTES.md).
 - **Phase 3:** demo surface polish (a simple status page or Telegram
   view), the demo video, the public repo, the X demo post (Dexter posts

@@ -173,9 +173,7 @@ one-page status view of the circle (pot progress, who has paid, who
 still owes, the agent treasurer's own activity log, and the
 purchase/QC receipt once the circle is funded), including the live
 testnet contract and transaction links below. The log is also at
-`GET /agent/log`. The current demo video is
-`demo/farm-ajo-demo-v3.mp4` (59 s, with a calm Nigerian voiceover;
-script in `demo/VOICEOVER.md`; v2 was the captions-only cut).
+`GET /agent/log`. The current demo video is `demo/farm-ajo-demo-v5_1.mp4` (59 s, Inspiring Gong voiceover; script in `demo/VOICEOVER.md`; v5.1 fixes the line-5 pace at 0:30–0:42; v5, v4 and v3 kept as fallbacks).
 
 ### Testnet deploy (EXECUTED 2026-11-10 — see DEPLOY_NOTES.md)
 
