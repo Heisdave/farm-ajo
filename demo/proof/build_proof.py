@@ -37,7 +37,7 @@ def frame(lines, caption=None):
     """lines: list of (text, color, size, bold) tuples."""
     img = Image.new("RGB", (W, H), BG)
     d = ImageDraw.Draw(img)
-    d.text((48, 30), "FARM AJO — LIVE RUN", font=font(FB, 25), fill=GREEN)
+    d.text((48, 30), "FARM AJO: LIVE RUN", font=font(FB, 25), fill=GREEN)
     d.text((48, 66), "one command · full circle · real output",
            font=font(FR, 19), fill=FAINT)
     d.line([48, 108, W - 48, 108], fill=(52, 58, 48), width=2)
@@ -63,11 +63,11 @@ FRAMES = [
     ([
         ("$ ./run.sh", CMD, 30),
         ("", OUT, 24),
-        ("FARM AJO — LIVE RUN", KEY, 34),
+        ("FARM AJO: LIVE RUN", KEY, 34),
         ("", OUT, 24),
         ("One command starts the demo.", OUT, 24),
-        ("A full savings circle runs end to end —", OUT, 24),
-        ("real output from the real app, nothing staged.", OUT, 24),
+        ("A full savings circle runs end to end.", OUT, 24),
+        ("Real output from the real app. Nothing staged.", OUT, 24),
     ], None, 4.0),
     ([
         ("$ curl localhost:8792/circle", CMD, 23),
