@@ -1,0 +1,87 @@
+$ curl localhost:8792/farmers
+{
+    "data_mode": "demo",
+    "note": "Fictional demo farmers; amounts are simulated testnet/demo units.",
+    "farmers": [
+        {
+            "farmer_id": "farmer-amina-bello",
+            "name": "Amina Bello",
+            "crop": "maize",
+            "expected": 5000,
+            "paid": 5000,
+            "shortfall": 0,
+            "fully_paid": true,
+            "location": "Kaduna"
+        },
+        {
+            "farmer_id": "farmer-yusuf-abdullahi",
+            "name": "Yusuf Abdullahi",
+            "crop": "sorghum",
+            "expected": 5000,
+            "paid": 5000,
+            "shortfall": 0,
+            "fully_paid": true,
+            "location": "Kaduna"
+        },
+        {
+            "farmer_id": "farmer-ibrahim-sani",
+            "name": "Ibrahim Sani",
+            "crop": "rice",
+            "expected": 5000,
+            "paid": 5000,
+            "shortfall": 0,
+            "fully_paid": true,
+            "location": "Kaduna"
+        },
+        {
+            "farmer_id": "farmer-ngozi-eze",
+            "name": "Ngozi Eze",
+            "crop": "soybean",
+            "expected": 5000,
+            "paid": 5000,
+            "shortfall": 0,
+            "fully_paid": true,
+            "location": "Makurdi"
+        },
+        {
+            "farmer_id": "farmer-musa-garba",
+            "name": "Musa Garba",
+            "crop": "millet",
+            "expected": 5000,
+            "paid": 5000,
+            "shortfall": 0,
+            "fully_paid": true,
+            "location": "Katsina"
+        },
+        {
+            "farmer_id": "farmer-funke-adebayo",
+            "name": "Funke Adebayo",
+            "crop": "tomatoes",
+            "expected": 5000,
+            "paid": 5000,
+            "shortfall": 0,
+            "fully_paid": true,
+            "location": "Kaduna"
+        },
+        {
+            "farmer_id": "farmer-halima-usman",
+            "name": "Halima Usman",
+            "crop": "groundnut",
+            "expected": 5000,
+            "paid": 2500,
+            "shortfall": 2500,
+            "fully_paid": false,
+            "location": "Kano"
+        },
+        {
+            "farmer_id": "farmer-emeka-nwosu",
+            "name": "Emeka Nwosu",
+            "crop": "cowpea",
+            "expected": 5000,
+            "paid": 0,
+            "shortfall": 5000,
+            "fully_paid": false,
+            "location": "Kaduna"
+        }
+    ]
+}

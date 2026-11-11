@@ -1,0 +1,70 @@
+$ curl -X POST localhost:8792/contributions -d '{"farmer_id": "farmer-emeka-nwosu", "amount": 5000}'
+{
+    "recorded": true,
+    "farmer_id": "farmer-emeka-nwosu",
+    "amount": 5000,
+    "circle": {
+        "name": "Planting Season Circle - Kaduna (demo)",
+        "data_mode": "demo",
+        "amount_unit": "demo units (simulated testnet credits)",
+        "target": 40000,
+        "contribution_amount": 5000,
+        "pot": 37500,
+        "remaining_to_target": 2500,
+        "state": "open",
+        "member_count": 8,
+        "members_fully_paid": 7,
+        "total_shortfall": 2500,
+        "fertilizer": {
+            "grade": "NPK 15-15-15",
+            "bag_kg": 50,
+            "price_per_bag": 2000,
+            "supplier": "Kaduna Agro Inputs Ltd (demo supplier)"
+        },
+        "season_note": "Contributions close before planting, when fertilizer prices spike; the circle buys in bulk ahead of the spike."
+    },
+    "near_contract_call": {
+        "contract": "circle2.farmajo-dev.testnet",
+        "method": "contribute",
+        "args": {
+            "member": "farmer-emeka-nwosu",
+            "amount": 5000
+        },
+        "note": "Payload prepared locally. The same call was run on-chain in the testnet deployment \u2014 see DEPLOY_NOTES.md. Nothing is sent by this API."
+    }
+}
+$ curl -X POST localhost:8792/contributions -d '{"farmer_id": "farmer-halima-usman", "amount": 2500}'
+{
+    "recorded": true,
+    "farmer_id": "farmer-halima-usman",
+    "amount": 2500,
+    "circle": {
+        "name": "Planting Season Circle - Kaduna (demo)",
+        "data_mode": "demo",
+        "amount_unit": "demo units (simulated testnet credits)",
+        "target": 40000,
+        "contribution_amount": 5000,
+        "pot": 40000,
+        "remaining_to_target": 0,
+        "state": "funded",
+        "member_count": 8,
+        "members_fully_paid": 8,
+        "total_shortfall": 0,
+        "fertilizer": {
+            "grade": "NPK 15-15-15",
+            "bag_kg": 50,
+            "price_per_bag": 2000,
+            "supplier": "Kaduna Agro Inputs Ltd (demo supplier)"
+        },
+        "season_note": "Contributions close before planting, when fertilizer prices spike; the circle buys in bulk ahead of the spike."
+    },
+    "near_contract_call": {
+        "contract": "circle2.farmajo-dev.testnet",
+        "method": "contribute",
+        "args": {
+            "member": "farmer-halima-usman",
+            "amount": 2500
+        },
+        "note": "Payload prepared locally. The same call was run on-chain in the testnet deployment \u2014 see DEPLOY_NOTES.md. Nothing is sent by this API."
+    }
+}

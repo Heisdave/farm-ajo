@@ -1,0 +1,61 @@
+$ curl -X POST localhost:8792/agent/tick
+{
+    "pot": 32500,
+    "target": 40000,
+    "remaining_to_target": 7500,
+    "funded": false,
+    "shortfalls": [
+        {
+            "farmer_id": "farmer-halima-usman",
+            "name": "Halima Usman",
+            "crop": "groundnut",
+            "expected": 5000,
+            "paid": 2500,
+            "shortfall": 2500,
+            "fully_paid": false
+        },
+        {
+            "farmer_id": "farmer-emeka-nwosu",
+            "name": "Emeka Nwosu",
+            "crop": "cowpea",
+            "expected": 5000,
+            "paid": 0,
+            "shortfall": 5000,
+            "fully_paid": false
+        }
+    ],
+    "total_shortfall": 7500,
+    "actions": [
+        "reminder: Halima Usman still owes 2500 of their 5000 share",
+        "reminder: Emeka Nwosu still owes 5000 of their 5000 share",
+        "hold: pot is 32500 of 40000; no purchase below target"
+    ],
+    "purchase": null,
+    "delivery": null,
+    "attestation": null,
+    "verified": false,
+    "circle_state": "open",
+    "verified_now": false,
+    "agent_log": [
+        {
+            "ts": 1794392987,
+            "time": "11:29:47",
+            "message": "Agent treasurer on duty \u2014 circle seeded: pot 32,500 of 40,000 (8 members, share 5,000 each)"
+        },
+        {
+            "ts": 1794392987,
+            "time": "11:29:47",
+            "message": "Shortfall: Halima Usman owes 2,500 \u00b7 Emeka Nwosu owes 5,000"
+        },
+        {
+            "ts": 1794392987,
+            "time": "11:29:47",
+            "message": "Agent tick \u2014 pot 32,500 of 40,000; holding, no purchase below target"
+        },
+        {
+            "ts": 1794392987,
+            "time": "11:29:47",
+            "message": "Shortfall: Halima Usman owes 2,500 \u00b7 Emeka Nwosu owes 5,000"
+        }
+    ]
+}

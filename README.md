@@ -18,16 +18,30 @@ Built for the NEAR Hackathon (Build Beyond Boundaries) — primary track
 **Real-World Money**, also fitting Autonomous Business, Social Money,
 and Agent Economy.
 
+**How does a farmer contribute?** The way Ajo already works: in
+**naira**, by bank transfer, USSD, mobile money, or cash handed to the
+co-operative. No wallet, no app to install, no coding — the farmer
+never has to touch the software at all. The agent treasurer records
+each contribution; NEAR is where the public receipt lives. (The full
+answer is under "Where does the money actually move?" below.) The
+farmer-facing surface in production is the channels farmers already
+use — the co-operative officer, USSD, or a chat bot on
+Telegram/WhatsApp talking to this same agent; this demo shows the
+agent's book and the record it writes.
+
 ## Run it (do X, see Y)
 
-Prerequisites: Python 3.11+. No API keys, no network, no wallet needed.
+Prerequisites: Python 3.11+. No API keys, no wallet needed.
 
 ```bash
 cd farm-ajo
-python3 -m venv .venv
-.venv/bin/pip install -r requirements.txt
-.venv/bin/uvicorn app.main:app --port 8792
+./run.sh
 ```
+
+`run.sh` sets everything up itself — it creates the Python
+environment, installs the dependencies, and starts the demo on port
+8792. No manual venv steps. (Manual equivalent:
+`python3 -m venv .venv && .venv/bin/pip install -r requirements.txt && .venv/bin/uvicorn app.main:app --port 8792`.)
 
 Then, in another terminal:
 
@@ -173,7 +187,7 @@ one-page status view of the circle (pot progress, who has paid, who
 still owes, the agent treasurer's own activity log, and the
 purchase/QC receipt once the circle is funded), including the live
 testnet contract and transaction links below. The log is also at
-`GET /agent/log`. The current demo video is `demo/farm-ajo-demo-v5_1.mp4` (59 s, Inspiring Gong voiceover; script in `demo/VOICEOVER.md`; v5.1 fixes the line-5 pace at 0:30–0:42; v5, v4 and v3 kept as fallbacks).
+`GET /agent/log`. The demo video on the X post is `demo/farm-ajo-demo-friend-cut.mp4` (76 s — a community cut of this same demo, with the submission end card added). `demo/farm-ajo-live-run.mp4` (50 s) is a live-run proof: one command (`./run.sh`), the full circle, real output (capture and build script in `demo/proof/`). The in-house cut is `demo/farm-ajo-demo-v5_1.mp4` (59 s, Inspiring Gong voiceover; script in `demo/VOICEOVER.md`; v5.1 fixes the line-5 pace at 0:30–0:42; v5, v4 and v3 kept as fallbacks).
 
 ### Testnet deploy (EXECUTED 2026-11-10 — see DEPLOY_NOTES.md)
 

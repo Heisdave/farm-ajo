@@ -12,10 +12,12 @@ Step 1/2/3 structure.
 
 ---
 
-## 1. X demo post — MAIN DRAFT (3-post thread, video v5.1 attached to post 1)
+## 1. X demo post — MAIN DRAFT (4-post thread — story video on post 1, live-run proof on post 4)
 
-Attach `demo/farm-ajo-demo-v5_1.mp4` to post 1. Dexter posts from his
-phone (@heisdave01). Each post fits X's 280 on its own.
+Attach `demo/farm-ajo-demo-friend-cut.mp4` to post 1 (the friend's
+cut with the end card added — chosen by Dexter on 2026-11-11 over the
+in-house v5.1) and `demo/farm-ajo-live-run.mp4` to post 4. Dexter
+posts from his phone (@heisdave01). Each post fits X's 280 on its own.
 
 **Post 1** (237 / 280):
 
@@ -30,6 +32,10 @@ phone (@heisdave01). Each post fits X's 280 on its own.
 > Honest part: testnet demo, payments simulated — no real money moved, and the chain can't prove the fertilizer was good. Trust sits with the named verifier, whose name is on record. Built from my phone, mid test week.
 > Repo: https://github.com/Heisdave/farm-ajo
 > @NEARProtocol #NEARHackathon
+
+**Post 4 — the proof clip** (attach `demo/farm-ajo-live-run.mp4`):
+
+> Here it is running for real — one command, no edits: the circle at 32,500, the agent refusing to buy below target, the two missing shares landing, the purchase firing at 40,000, and the two-signature receipt at the end. Proof over polish.
 
 Why a thread, not one post: the required pieces (opening line, pitch
 line, both URLs, tags, honest downside) cannot fit one 280-character
@@ -96,8 +102,11 @@ Notes on the payload:
   to `github.com/Heisdave/farm-ajo` and made public **only with
   Dexter's explicit confirmation**.
 2. **Dexter posts the X demo** from his phone (@heisdave01): the
-  thread in section 1 (or the alternate in section 2) with the v5.1
-  video attached (corrected from v3 on 2026-11-11 ~08:58 WAT — v5.1 is the current cut, pending Dexter's ear verdict at the 09:09 run; if he rejects it, fall back to v5, `demo/farm-ajo-demo-v5.mp4`). He sends back the post URL.
+  thread in section 1 (or the alternate in section 2) — the friend's
+  cut with the end card added (`demo/farm-ajo-demo-friend-cut.mp4`,
+  chosen by Dexter on 2026-11-11) on post 1 and the live-run proof
+  clip (`demo/farm-ajo-live-run.mp4`) on post 4. He sends back the
+  post URL.
 3. **Fill `demoUrl`** in the payload with that X post URL.
 4. **Print the full payload** for Dexter, including the consent
   notice read verbatim.

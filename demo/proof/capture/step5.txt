@@ -1,0 +1,132 @@
+$ curl -X POST localhost:8792/agent/tick
+{
+    "pot": 40000,
+    "target": 40000,
+    "remaining_to_target": 0,
+    "funded": true,
+    "shortfalls": [],
+    "total_shortfall": 0,
+    "actions": [
+        "target reached: pot 40000 >= target 40000",
+        "bulk purchase fired: 20 bags of NPK 15-15-15 from Kaduna Agro Inputs Ltd (demo supplier) for 40000",
+        "signature 1 of 2: delivery record ready for the supplier account supplier.farmajo-dev.testnet",
+        "signature 2 of 2: QC attestation ready for the verifier account verifier.farmajo-dev.testnet (Fatima Sule \u2014 QC Verifier, Kaduna Farmers' Co-operative (demo))",
+        "circle closes as verified only when both signatures are recorded on NEAR testnet and QC passed"
+    ],
+    "purchase": {
+        "supplier": "Kaduna Agro Inputs Ltd (demo supplier)",
+        "grade": "NPK 15-15-15",
+        "bags": 20,
+        "price_per_bag": 2000,
+        "total_cost": 40000,
+        "leftover": 0
+    },
+    "delivery": {
+        "supplier_name": "Kaduna Agro Inputs Ltd (demo supplier)",
+        "bags": 20,
+        "grade": "NPK 15-15-15",
+        "total_cost": 40000,
+        "notes": "Demo delivery record: 20 bags of NPK 15-15-15 delivered by Kaduna Agro Inputs Ltd (demo supplier) against the circle's bulk order, total 40000 demo units. Simulated delivery on testnet/demo data - no real goods moved.",
+        "signed_by": "supplier.farmajo-dev.testnet"
+    },
+    "attestation": {
+        "verifier_name": "Fatima Sule \u2014 QC Verifier, Kaduna Farmers' Co-operative (demo)",
+        "qc_passed": true,
+        "checks": [
+            "bag count matches the purchase order",
+            "sample bags weigh within +/-2% of the nominal 50 kg",
+            "granules uniform in size and colour; no excessive caking",
+            "blend grade on batch labels matches the ordered grade"
+        ],
+        "notes": "Attested at delivery by Fatima Sule \u2014 QC Verifier, Kaduna Farmers' Co-operative (demo). Sample bags within +/-2% of 50 kg, granules uniform, no excessive caking, batch labels match the ordered grade. Simulated delivery on testnet/demo data - no real goods moved.",
+        "signed_by": "verifier.farmajo-dev.testnet"
+    },
+    "verified": true,
+    "circle_state": "verified",
+    "verified_now": true,
+    "receipt_id": 1,
+    "near_contract_calls": [
+        {
+            "contract": "circle2.farmajo-dev.testnet",
+            "method": "record_delivery",
+            "args": {
+                "supplier_name": "Kaduna Agro Inputs Ltd (demo supplier)",
+                "bags": 20,
+                "grade": "NPK 15-15-15",
+                "total_cost": 40000,
+                "notes": "Demo delivery record: 20 bags of NPK 15-15-15 delivered by Kaduna Agro Inputs Ltd (demo supplier) against the circle's bulk order, total 40000 demo units. Simulated delivery on testnet/demo data - no real goods moved."
+            },
+            "sign_as": "supplier.farmajo-dev.testnet",
+            "note": "Signature 1 of 2. The contract rejects any caller other than the supplier account."
+        },
+        {
+            "contract": "circle2.farmajo-dev.testnet",
+            "method": "attest_quality",
+            "args": {
+                "verifier_name": "Fatima Sule \u2014 QC Verifier, Kaduna Farmers' Co-operative (demo)",
+                "qc_passed": true,
+                "checks": [
+                    "bag count matches the purchase order",
+                    "sample bags weigh within +/-2% of the nominal 50 kg",
+                    "granules uniform in size and colour; no excessive caking",
+                    "blend grade on batch labels matches the ordered grade"
+                ],
+                "notes": "Attested at delivery by Fatima Sule \u2014 QC Verifier, Kaduna Farmers' Co-operative (demo). Sample bags within +/-2% of 50 kg, granules uniform, no excessive caking, batch labels match the ordered grade. Simulated delivery on testnet/demo data - no real goods moved."
+            },
+            "sign_as": "verifier.farmajo-dev.testnet",
+            "note": "Signature 2 of 2. The contract rejects any caller other than the QC verifier account. Both calls were run on-chain \u2014 see DEPLOY_NOTES.md. Nothing is sent by this API."
+        }
+    ],
+    "agent_log": [
+        {
+            "ts": 1794392987,
+            "time": "11:29:47",
+            "message": "Agent treasurer on duty \u2014 circle seeded: pot 32,500 of 40,000 (8 members, share 5,000 each)"
+        },
+        {
+            "ts": 1794392987,
+            "time": "11:29:47",
+            "message": "Shortfall: Halima Usman owes 2,500 \u00b7 Emeka Nwosu owes 5,000"
+        },
+        {
+            "ts": 1794392987,
+            "time": "11:29:47",
+            "message": "Agent tick \u2014 pot 32,500 of 40,000; holding, no purchase below target"
+        },
+        {
+            "ts": 1794392987,
+            "time": "11:29:47",
+            "message": "Shortfall: Halima Usman owes 2,500 \u00b7 Emeka Nwosu owes 5,000"
+        },
+        {
+            "ts": 1794392988,
+            "time": "11:29:48",
+            "message": "Contribution received: Emeka Nwosu +5,000 (pot 37,500)"
+        },
+        {
+            "ts": 1794392988,
+            "time": "11:29:48",
+            "message": "Contribution received: Halima Usman +2,500 (pot 40,000)"
+        },
+        {
+            "ts": 1794392988,
+            "time": "11:29:48",
+            "message": "Pot reached 40,000 \u2014 executing bulk purchase: 20 bags of NPK 15-15-15 for 40,000"
+        },
+        {
+            "ts": 1794392988,
+            "time": "11:29:48",
+            "message": "Delivery signed by supplier: Kaduna Agro Inputs Ltd (demo supplier) (supplier.farmajo-dev.testnet)"
+        },
+        {
+            "ts": 1794392988,
+            "time": "11:29:48",
+            "message": "Quality attested by Fatima Sule \u2014 QC Verifier, Kaduna Farmers' Co-operative (demo) (verifier.farmajo-dev.testnet) \u2014 QC passed"
+        },
+        {
+            "ts": 1794392988,
+            "time": "11:29:48",
+            "message": "Circle verified \u2014 both signatures recorded; receipt closed"
+        }
+    ]
+}

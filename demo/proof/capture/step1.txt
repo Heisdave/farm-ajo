@@ -1,0 +1,21 @@
+$ curl localhost:8792/circle
+{
+    "name": "Planting Season Circle - Kaduna (demo)",
+    "data_mode": "demo",
+    "amount_unit": "demo units (simulated testnet credits)",
+    "target": 40000,
+    "contribution_amount": 5000,
+    "pot": 32500,
+    "remaining_to_target": 7500,
+    "state": "open",
+    "member_count": 8,
+    "members_fully_paid": 6,
+    "total_shortfall": 7500,
+    "fertilizer": {
+        "grade": "NPK 15-15-15",
+        "bag_kg": 50,
+        "price_per_bag": 2000,
+        "supplier": "Kaduna Agro Inputs Ltd (demo supplier)"
+    },
+    "season_note": "Contributions close before planting, when fertilizer prices spike; the circle buys in bulk ahead of the spike."
+}
