@@ -170,3 +170,37 @@ https://explorer.testnet.near.org/accounts/circle2.farmajo-dev.testnet
 
 The same data is in `onchain.json` (v2; public ids/hashes only), and
 the demo page reads it from there.
+
+## Addendum, 2026-11-11: the agent payout (post-submission buffer)
+
+After the submission was filed, one bounded addition was made in the
+buffer window, answering the most common external criticism of the
+demo (that no value ever moves). The contract, the submitted demo
+flow and the default `./run.sh` behaviour are unchanged.
+
+- `app/payout.py` (new): opt-in via `FARMAJO_PAYOUT_ENABLED=1`. When
+  the purchase tick fires, the agent also sends one NEAR testnet
+  transfer from `farmajo-dev.testnet` to
+  `supplier.farmajo-dev.testnet` using near-cli-rs
+  (`tokens ... send-near ... network-config testnet
+  sign-with-legacy-keychain send`), and the API stores the tx hash in
+  the receipt (`payout_*` columns) and shows it on the demo page.
+  Exactly-once is structural: the purchase branch of the tick runs
+  only when no receipt exists yet. Failures are reported, never
+  raised, and never block the purchase.
+- Tooling smoke test first (0.01 NEAR, same accounts):
+  tx `HvTRt4eebgiKswsUvHWmxWW6iDA4Lxxyv8TAqLGt85qA`.
+- Recorded agent run (fresh demo copy, payout enabled, the standard
+  capture flow): the funding tick fired the payout.
+  - **Payout tx:**
+    [`HdK5yfGSXtpUgTBtmw9h5TjuB51TqeqM3pFSf5rbZann`](https://explorer.testnet.near.org/transactions/HdK5yfGSXtpUgTBtmw9h5TjuB51TqeqM3pFSf5rbZann)
+    (0.3 NEAR, `farmajo-dev.testnet` -> `supplier.farmajo-dev.testnet`)
+  - Verified by RPC afterwards: tx status `SuccessValue`, single
+    Transfer action of 300000000000000000000000 yoctoNEAR; supplier
+    balance 0.30966 -> 0.60966 NEAR (exactly +0.3).
+- Tests: 16 passing (11 pre-existing + 5 new payout tests with the
+  transfer faked: config gating, exactly-once, below-target silence,
+  failure safety, demo page line).
+- The amount is a stand-in: testnet NEAR has no value. In production
+  the same trigger releases the co-operative's naira bank transfer;
+  see README, "Does any money move in the demo?".

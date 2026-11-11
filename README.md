@@ -155,8 +155,36 @@ already use:
   arrived, there is nothing settled to point at. A public record
   everyone can check is what those arguments get settled against.
 
-In this demo, nothing moves at all: contributions are records on
-testnet, and the contract tracks amounts and does not custody funds.
+In this demo, contributions are records on testnet, and the contract
+tracks amounts and does not custody funds. One thing does move, once
+the purchase fires and if the payout is switched on: the payment
+itself. That is the next section.
+
+## Does any money move in the demo?
+
+Yes: one piece, and it is real. The agent can run with a payout
+switch on (`FARMAJO_PAYOUT_ENABLED=1` set before `./run.sh`). With
+it on, the tick that fires the bulk purchase also sends one actual
+NEAR testnet transfer from the agent treasurer's account
+(`farmajo-dev.testnet`) to the supplier's account
+(`supplier.farmajo-dev.testnet`), and the receipt records the
+transaction hash beside the two signatures. It fires exactly once,
+only when the pot reaches the target. It is off by default: the
+plain `./run.sh` demo sends nothing, exactly as before, and no key
+is ever stored in this repo (the transfer signs with the machine's
+local NEAR keychain).
+
+The recorded run: **0.3 NEAR**, tx
+[HdK5yfGSXtpUgTBtmw9h5TjuB51TqeqM3pFSf5rbZann](https://explorer.testnet.near.org/transactions/HdK5yfGSXtpUgTBtmw9h5TjuB51TqeqM3pFSf5rbZann),
+checked on-chain afterwards: the supplier's balance rose by exactly
+the amount sent.
+
+Read the amount honestly: testnet NEAR has no value, and 0.3 is a
+stand-in for the 40,000-unit purchase price, not a conversion of it.
+The point is the shape of the event. The trigger that moves testnet
+NEAR in the demo is the same trigger that in production releases the
+co-operative's bank transfer in naira. The money rail stays Nigerian;
+the firing of the payment becomes a public, checkable fact.
 
 ## The contract
 
@@ -187,7 +215,7 @@ one-page status view of the circle (pot progress, who has paid, who
 still owes, the agent treasurer's own activity log, and the
 purchase/QC receipt once the circle is funded), including the live
 testnet contract and transaction links below. The log is also at
-`GET /agent/log`. The demo video on the X post is `demo/farm-ajo-demo-friend-cut.mp4` (76 s, a community cut of this same demo, with the submission end card added). `demo/farm-ajo-live-run.mp4` (50 s) is a live-run proof: one command (`./run.sh`), the full circle, real output (capture and build script in `demo/proof/`). The in-house cut is `demo/farm-ajo-demo-v5_1.mp4` (59 s, Inspiring Gong voiceover; script in `demo/VOICEOVER.md`; v5.1 fixes the line-5 pace at 0:30–0:42; v5, v4 and v3 kept as fallbacks).
+`GET /agent/log`. The demo video on the X post is `demo/farm-ajo-demo-friend-cut.mp4` (76 s, a community cut of this same demo, with the submission end card added). `demo/farm-ajo-live-run.mp4` (58 s) is a live-run proof: one command, the full circle, real output, including the testnet payout firing at the purchase (capture and build script in `demo/proof/`). The in-house cut is `demo/farm-ajo-demo-v5_1.mp4` (59 s, Inspiring Gong voiceover; script in `demo/VOICEOVER.md`; v5.1 fixes the line-5 pace at 0:30–0:42; v5, v4 and v3 kept as fallbacks).
 
 ### Testnet deploy (EXECUTED 2026-11-10; see DEPLOY_NOTES.md)
 

@@ -44,6 +44,14 @@ $ curl -X POST localhost:8792/agent/tick
     "verified": true,
     "circle_state": "verified",
     "verified_now": true,
+    "payout": {
+        "from": "farmajo-dev.testnet",
+        "to": "supplier.farmajo-dev.testnet",
+        "amount_near": "0.3",
+        "status": "sent",
+        "tx_hash": "HdK5yfGSXtpUgTBtmw9h5TjuB51TqeqM3pFSf5rbZann",
+        "explorer_url": "https://explorer.testnet.near.org/transactions/HdK5yfGSXtpUgTBtmw9h5TjuB51TqeqM3pFSf5rbZann"
+    },
     "receipt_id": 1,
     "near_contract_calls": [
         {
@@ -74,58 +82,63 @@ $ curl -X POST localhost:8792/agent/tick
                 "notes": "Attested at delivery by Fatima Sule \u2014 QC Verifier, Kaduna Farmers' Co-operative (demo). Sample bags within +/-2% of 50 kg, granules uniform, no excessive caking, batch labels match the ordered grade. Simulated delivery on testnet/demo data - no real goods moved."
             },
             "sign_as": "verifier.farmajo-dev.testnet",
-            "note": "Signature 2 of 2. The contract rejects any caller other than the QC verifier account. Both calls were run on-chain \u2014 see DEPLOY_NOTES.md. Nothing is sent by this API."
+            "note": "Signature 2 of 2. The contract rejects any caller other than the QC verifier account. Both calls were run on-chain during the testnet deployment; see DEPLOY_NOTES.md. This API does not send them."
         }
     ],
     "agent_log": [
         {
-            "ts": 1794392987,
-            "time": "11:29:47",
+            "ts": 1794404378,
+            "time": "14:39:38",
             "message": "Agent treasurer on duty \u2014 circle seeded: pot 32,500 of 40,000 (8 members, share 5,000 each)"
         },
         {
-            "ts": 1794392987,
-            "time": "11:29:47",
+            "ts": 1794404378,
+            "time": "14:39:38",
             "message": "Shortfall: Halima Usman owes 2,500 \u00b7 Emeka Nwosu owes 5,000"
         },
         {
-            "ts": 1794392987,
-            "time": "11:29:47",
+            "ts": 1794404378,
+            "time": "14:39:38",
             "message": "Agent tick \u2014 pot 32,500 of 40,000; holding, no purchase below target"
         },
         {
-            "ts": 1794392987,
-            "time": "11:29:47",
+            "ts": 1794404378,
+            "time": "14:39:38",
             "message": "Shortfall: Halima Usman owes 2,500 \u00b7 Emeka Nwosu owes 5,000"
         },
         {
-            "ts": 1794392988,
-            "time": "11:29:48",
+            "ts": 1794404378,
+            "time": "14:39:38",
             "message": "Contribution received: Emeka Nwosu +5,000 (pot 37,500)"
         },
         {
-            "ts": 1794392988,
-            "time": "11:29:48",
+            "ts": 1794404378,
+            "time": "14:39:38",
             "message": "Contribution received: Halima Usman +2,500 (pot 40,000)"
         },
         {
-            "ts": 1794392988,
-            "time": "11:29:48",
+            "ts": 1794404378,
+            "time": "14:39:38",
             "message": "Pot reached 40,000 \u2014 executing bulk purchase: 20 bags of NPK 15-15-15 for 40,000"
         },
         {
-            "ts": 1794392988,
-            "time": "11:29:48",
+            "ts": 1794404378,
+            "time": "14:39:38",
+            "message": "Purchase payout fired on NEAR testnet: 0.3 NEAR to supplier.farmajo-dev.testnet (tx HdK5yfGSXtpUgTBtmw9h5TjuB51TqeqM3pFSf5rbZann)"
+        },
+        {
+            "ts": 1794404378,
+            "time": "14:39:38",
             "message": "Delivery signed by supplier: Kaduna Agro Inputs Ltd (demo supplier) (supplier.farmajo-dev.testnet)"
         },
         {
-            "ts": 1794392988,
-            "time": "11:29:48",
+            "ts": 1794404378,
+            "time": "14:39:38",
             "message": "Quality attested by Fatima Sule \u2014 QC Verifier, Kaduna Farmers' Co-operative (demo) (verifier.farmajo-dev.testnet) \u2014 QC passed"
         },
         {
-            "ts": 1794392988,
-            "time": "11:29:48",
+            "ts": 1794404378,
+            "time": "14:39:38",
             "message": "Circle verified \u2014 both signatures recorded; receipt closed"
         }
     ]

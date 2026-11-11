@@ -16,8 +16,12 @@ Endpoints
                         `attest_quality` (QC verifier account only)
   GET  /receipts        two-signature purchase / QC receipts generated so far
 
-Demo data only: simulated contributions on testnet/demo units. No API keys,
-no network needed, no real payments, nothing is sent on-chain by this API.
+Demo data only: simulated contributions in demo units. No API keys and
+no real payments. By default nothing is sent on-chain by this API. One
+opt-in exception: with FARMAJO_PAYOUT_ENABLED set, the tick that fires
+the purchase also sends a single testnet NEAR transfer (the purchase
+payout, a symbolic stand-in with no real value) and records its hash in
+the receipt. See app/payout.py.
 """
 
 from __future__ import annotations
@@ -33,6 +37,7 @@ from fastapi.responses import HTMLResponse
 from pydantic import BaseModel, Field
 
 from . import agent as agent_core
+from . import payout as payout_mod
 from .demo_data import CIRCLE, FARMERS, ROLES
 
 DB_PATH = Path(__file__).resolve().parent.parent / "data" / "farm_ajo.db"
@@ -72,6 +77,12 @@ def _db() -> sqlite3.Connection:
                checks TEXT
            )"""
     )
+    receipt_cols = {row[1] for row in
+                    conn.execute("PRAGMA table_info(receipts)")}
+    for col in ("payout_tx", "payout_from", "payout_to",
+                "payout_amount_near"):
+        if col not in receipt_cols:
+            conn.execute(f"ALTER TABLE receipts ADD COLUMN {col} TEXT")
     conn.execute(
         """CREATE TABLE IF NOT EXISTS agent_log (
                id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -172,11 +183,13 @@ def _receipts(conn: sqlite3.Connection) -> list[dict]:
     rows = conn.execute(
         "SELECT id, supplier, bags, grade, qc_passed, notes, total_cost,"
         " created_at, near_tx_hash, delivered_by, supplier_account,"
-        " attested_by, verifier_account, checks FROM receipts ORDER BY id"
+        " attested_by, verifier_account, checks, payout_tx, payout_from,"
+        " payout_to, payout_amount_near FROM receipts ORDER BY id"
     ).fetchall()
     keys = ["id", "supplier", "bags", "grade", "qc_passed", "notes",
             "total_cost", "created_at", "near_tx_hash", "delivered_by",
-            "supplier_account", "attested_by", "verifier_account", "checks"]
+            "supplier_account", "attested_by", "verifier_account", "checks",
+            "payout_tx", "payout_from", "payout_to", "payout_amount_near"]
     out = []
     for row in rows:
         d = dict(zip(keys, row))
@@ -330,6 +343,7 @@ def agent_tick() -> dict:
         body = result.to_dict()
         body["circle_state"] = _circle_view(conn)["state"]
         body["verified_now"] = False
+        body["payout"] = None
         if (result.delivery is not None and result.attestation is not None
                 and result.purchase is not None):
             now = int(time.time())
@@ -355,6 +369,27 @@ def agent_tick() -> dict:
                     ),
                 )
                 receipt_id = cur.lastrowid
+            payout_cfg = payout_mod.config_from_env()
+            if payout_cfg is not None:
+                # Opt-in: the purchase tick also fires the real testnet
+                # payout transfer. This branch runs exactly once per
+                # circle (later ticks see the receipt and take the
+                # already-verified path), so the payout cannot double.
+                payout_result = payout_mod.fire_payout(
+                    payout_cfg, result.delivery.supplier_account)
+                body["payout"] = payout_result
+                if payout_result.get("status") == "sent":
+                    with conn:
+                        conn.execute(
+                            "UPDATE receipts SET payout_tx = ?,"
+                            " payout_from = ?, payout_to = ?,"
+                            " payout_amount_near = ? WHERE id = ?",
+                            (payout_result["tx_hash"],
+                             payout_result["from"],
+                             payout_result["to"],
+                             payout_result["amount_near"],
+                             receipt_id),
+                        )
             body["verified_now"] = result.verified
             body["circle_state"] = "verified"
             body["receipt_id"] = receipt_id
@@ -367,6 +402,23 @@ def agent_tick() -> dict:
                     f"{result.purchase.total_cost:,}",
                     ts=now,
                 )
+                if body["payout"] is not None:
+                    if body["payout"].get("status") == "sent":
+                        _append_log(
+                            conn,
+                            f"Purchase payout fired on NEAR testnet: "
+                            f"{body['payout']['amount_near']} NEAR to "
+                            f"{body['payout']['to']} "
+                            f"(tx {body['payout']['tx_hash']})",
+                            ts=now,
+                        )
+                    else:
+                        _append_log(
+                            conn,
+                            "Purchase payout failed on NEAR testnet: "
+                            f"{body['payout'].get('error', 'unknown error')}",
+                            ts=now,
+                        )
                 _append_log(
                     conn,
                     f"Delivery signed by supplier: "
@@ -404,8 +456,9 @@ def agent_tick() -> dict:
                     "sign_as": result.attestation.verifier_account,
                     "note": "Signature 2 of 2. The contract rejects any "
                             "caller other than the QC verifier account. "
-                            "Both calls were run on-chain — see "
-                            "DEPLOY_NOTES.md. Nothing is sent by this API.",
+                            "Both calls were run on-chain during the "
+                            "testnet deployment; see DEPLOY_NOTES.md. "
+                            "This API does not send them.",
                 },
             ]
         elif existing:
@@ -509,6 +562,19 @@ def demo_page() -> str:
             " (demo supplier)", "")
         verifier_display = (r['attested_by'] or "").split(",")[0].replace(
             " (demo)", "")
+        payout_html = ""
+        if r.get("payout_tx"):
+            payout_html = f"""
+          <p>Purchase payout: <strong>{esc(r['payout_amount_near'] or '')}
+             NEAR</strong> on NEAR testnet, from
+             {esc(r['payout_from'] or '')} to
+             {esc(r['payout_to'] or '')}.<br>
+             Tx: <a href="https://explorer.testnet.near.org/transactions/{esc(r['payout_tx'])}">{esc(r['payout_tx'])}</a></p>
+          <p class="notes">Testnet NEAR has no value. In this demo the
+             transfer is the moment the pot is spent, standing in for
+             the purchase payment. In production the same trigger
+             releases the co-operative's bank transfer in naira, and
+             the chain keeps the receipt.</p>"""
         receipt_html = f"""
         <section class="card">
           <h2>Purchase + QC receipt — two signatures</h2>
@@ -521,6 +587,7 @@ def demo_page() -> str:
           <p>QC result: <strong>{'PASSED' if r['qc_passed'] else 'FAILED'}</strong> —
              bag count · sample weights within +/-2% of 50&nbsp;kg · granule
              uniformity / no excessive caking · batch-label grade match.</p>
+          {payout_html}
           <p class="notes">The chain proves this record existed and who
              signed it. It cannot prove the fertilizer was good — that
              trust sits with the named verifier, whose name and history

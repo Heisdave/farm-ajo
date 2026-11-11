@@ -75,11 +75,19 @@ the agent firing, the honest downside in full).
   "tracks": ["realworld", "business", "social", "agents"],
   "nearAddress": "dexter01.near",
   "projectUrl": "https://github.com/Heisdave/farm-ajo",
-  "demoUrl": "TO-FILL-AFTER-X-POST",
+  "demoUrl": "https://x.com/heisdave01/status/2120484263703314483",
   "idea": "<the 1,680-character idea text in section 3 above>",
   "consent": false
 }
 ```
+
+**STATUS: SUBMITTED Wed 2026-11-11 ~12:57 WAT, HTTP 201.**
+requestId `111ddcd3-8815-4ce1-bed6-226f523cab6c`, demoUrl filled with
+the live X thread. The first POST read-timed out at 30 s (outcome
+unknown); a single retry with the SAME requestId returned 201, and
+the API's public application count read 541 before and after,
+consistent with the server deduping on requestId. Full record in the
+goal workspace: hidden_files/submission_record.json.
 
 Notes on the payload:
 

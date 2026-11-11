@@ -61,7 +61,7 @@ KEY = CREAM
 FRAMES = [
     # (lines, caption, seconds)
     ([
-        ("$ ./run.sh", CMD, 30),
+        ("$ FARMAJO_PAYOUT_ENABLED=1 ./run.sh", CMD, 30),
         ("", OUT, 24),
         ("FARM AJO: LIVE RUN", KEY, 34),
         ("", OUT, 24),
@@ -123,6 +123,19 @@ FRAMES = [
         ('"circle_state": "verified"', KEY, 23),
     ], "At target, the purchase fires itself.", 9.0),
     ([
+        ("...same tick, further down the response:", OUT, 23),
+        ('"payout": {', OUT, 23),
+        ('  "status": "sent",', KEY, 23),
+        ('  "from": "farmajo-dev.testnet",', OUT, 23),
+        ('  "to": "supplier.farmajo-dev.testnet",', OUT, 23),
+        ('  "amount_near": "0.3",', OUT, 23),
+        ('  "tx_hash": "HdK5yfGSXtpUgTBtmw9h5TjuB51TqeqM3pFSf5rbZann",', KEY, 23),
+        ("}", OUT, 23),
+        ("", OUT, 23),
+        ("A stand-in amount, but a real transfer:", OUT, 23),
+        ("testnet NEAR standing in for the 40,000 price.", OUT, 23),
+    ], "The payment itself moves, on NEAR testnet.", 8.0),
+    ([
         ("$ curl localhost:8792/receipts", CMD, 23),
         ('"delivered_by": "Kaduna Agro Inputs Ltd",', OUT, 23),
         ('"supplier_account": "supplier.farmajo-dev.testnet",', OUT, 23),
@@ -134,7 +147,9 @@ FRAMES = [
         ('"checks": ["bag count matches the purchase order",', OUT, 23),
         ('  "sample bags weigh within +/-2% of 50 kg",', OUT, 23),
         ('  "granules uniform; no excessive caking", ...]', OUT, 23),
-    ], "Two signatures. Neither can do the other's job.", 9.0),
+        ('"payout_tx": "HdK5yfGSXtpUgTBtmw9h5TjuB51TqeqM3pFSf5rbZann",', KEY, 23),
+        ('"payout_to": "supplier.farmajo-dev.testnet",', OUT, 23),
+    ], "Two signatures, and the payout hash, in one receipt.", 9.0),
 ]
 
 

@@ -9,7 +9,7 @@ $ curl localhost:8792/receipts
             "qc_passed": true,
             "notes": "Attested at delivery by Fatima Sule \u2014 QC Verifier, Kaduna Farmers' Co-operative (demo). Sample bags within +/-2% of 50 kg, granules uniform, no excessive caking, batch labels match the ordered grade. Simulated delivery on testnet/demo data - no real goods moved.",
             "total_cost": 40000,
-            "created_at": 1794392988,
+            "created_at": 1794404378,
             "near_tx_hash": null,
             "delivered_by": "Kaduna Agro Inputs Ltd (demo supplier)",
             "supplier_account": "supplier.farmajo-dev.testnet",
@@ -20,7 +20,11 @@ $ curl localhost:8792/receipts
                 "sample bags weigh within +/-2% of the nominal 50 kg",
                 "granules uniform in size and colour; no excessive caking",
                 "blend grade on batch labels matches the ordered grade"
-            ]
+            ],
+            "payout_tx": "HdK5yfGSXtpUgTBtmw9h5TjuB51TqeqM3pFSf5rbZann",
+            "payout_from": "farmajo-dev.testnet",
+            "payout_to": "supplier.farmajo-dev.testnet",
+            "payout_amount_near": "0.3"
         }
     ]
 }

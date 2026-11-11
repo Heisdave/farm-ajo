@@ -36,25 +36,26 @@ $ curl -X POST localhost:8792/agent/tick
     "verified": false,
     "circle_state": "open",
     "verified_now": false,
+    "payout": null,
     "agent_log": [
         {
-            "ts": 1794392987,
-            "time": "11:29:47",
+            "ts": 1794404378,
+            "time": "14:39:38",
             "message": "Agent treasurer on duty \u2014 circle seeded: pot 32,500 of 40,000 (8 members, share 5,000 each)"
         },
         {
-            "ts": 1794392987,
-            "time": "11:29:47",
+            "ts": 1794404378,
+            "time": "14:39:38",
             "message": "Shortfall: Halima Usman owes 2,500 \u00b7 Emeka Nwosu owes 5,000"
         },
         {
-            "ts": 1794392987,
-            "time": "11:29:47",
+            "ts": 1794404378,
+            "time": "14:39:38",
             "message": "Agent tick \u2014 pot 32,500 of 40,000; holding, no purchase below target"
         },
         {
-            "ts": 1794392987,
-            "time": "11:29:47",
+            "ts": 1794404378,
+            "time": "14:39:38",
             "message": "Shortfall: Halima Usman owes 2,500 \u00b7 Emeka Nwosu owes 5,000"
         }
     ]
